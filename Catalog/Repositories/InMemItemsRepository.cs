@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Catalog.Entities;
+using System.Linq;
 
 namespace Catalog.Repositories{
 
@@ -25,5 +26,11 @@ namespace Catalog.Repositories{
                 CreatedDate = DateTimeOffset.UtcNow
             },
         };
+        public IEnumerable<Item> GetItems(){
+            return items;
+        }
+        public Item GetItem(Guid id){
+            return items.Where(item => item.ID == id).SingleOrDefault();
+        }
     }
 }
