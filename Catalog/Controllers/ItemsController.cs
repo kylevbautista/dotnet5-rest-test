@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using Catalog.Repositories;
 using System.Collections.Generic;
@@ -7,10 +8,10 @@ namespace Catalog.Controllers{
     [ApiController]
     [Route("items")]
     public class ItemsController : ControllerBase{
-        private readonly InMemItemsRespository respository;
+        private readonly IItemsRespository respository;
 
-        public ItemsController(){
-            respository = new InMemItemsRespository();
+        public ItemsController(IItemsRespository respository){
+            this.respository = respository;
         }
 
         // GET /items
@@ -18,6 +19,16 @@ namespace Catalog.Controllers{
         public IEnumerable<Item> GetItems(){
             var items = respository.GetItems();
             return items;
+        }
+        // GET /items/{id}
+        [HttpGet("{id}")]
+        public ActionResult<Item> GetItem(Guid id){
+            var item = respository.GetItem(id);
+
+            if(item is null){
+                return NotFound();
+            }
+            return item;
         }
     }
 }
