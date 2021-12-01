@@ -34,6 +34,7 @@ namespace Catalog.Controllers{
         }
 
         // POST /items
+        // usually returns item
         [HttpPost]
         public ActionResult<ItemDto> CreateItem(CreateItemDto itemDto){
             Item item = new(){
@@ -46,6 +47,24 @@ namespace Catalog.Controllers{
             respository.CreateItem(item);
 
             return CreatedAtAction(nameof(GetItem), new{id = item.ID},item.AsDto());
+        }
+
+        // PUT /items/{id}
+        //
+        [HttpPut("{id}")]
+        public ActionResult UpdateItem(Guid id, UpdateItemDto itemDto){
+            var existingItem = respository.GetItem(id);
+            if(existingItem is null){
+                return NotFound();
+            }
+            // with expression explicit to record types
+            // with makes a copy of existing item with defined modified properties
+            Item updatedItem = existingItem with{
+                Name = itemDto.Name,
+                Price = itemDto.Price
+            };
+            respository.UpdateItem(updatedItem);
+            return NoContent();
         }
     }
 }

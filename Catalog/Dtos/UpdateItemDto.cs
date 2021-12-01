@@ -1,5 +1,4 @@
-namespace Catalog.Dtos{
-    using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Catalog.Dtos{
     public record UpdateItemDto{
@@ -9,5 +8,4 @@ namespace Catalog.Dtos{
         [Range(1,1000)]
         public decimal Price{get;init;}
     }
-}
 }
