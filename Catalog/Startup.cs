@@ -35,11 +35,17 @@ namespace Catalog
             BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
             BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.String));
 
-            // MongoDb Service
+            // MongoDb Dockerized Service
+            // services.AddSingleton<IMongoClient>(ServiceProvider=>{
+            //     var settings = Configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
+            //     return new MongoClient(settings.ConnectionString);
+            // });
+            // MongoDb Atlas Cloud Service
             services.AddSingleton<IMongoClient>(ServiceProvider=>{
-                var settings = Configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
-                return new MongoClient(settings.ConnectionString);
+                var settings = MongoClientSettings.FromConnectionString("mongodb+srv://admin:<password>@cluster0.doegn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
+                return new MongoClient(settings);
             });
+            // This is for Dependecy injecting the Interface we give to the controller
             services.AddSingleton<IItemsRespository,MongoDbItemsRepository>();
 
             // In Mem servicee and interface for dependency injection
