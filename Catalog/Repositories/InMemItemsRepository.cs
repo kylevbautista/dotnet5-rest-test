@@ -12,21 +12,21 @@ namespace Catalog.Repositories{
     {
       new Item
       {
-        ID = Guid.NewGuid(),
+        id = Guid.NewGuid(),
         Name = "Potion",
         Price = 9,
         CreatedDate = DateTimeOffset.UtcNow
       },
       new Item
       {
-        ID = Guid.NewGuid(),
+        id = Guid.NewGuid(),
         Name = "Iron Sword",
         Price = 20,
         CreatedDate = DateTimeOffset.UtcNow
       },
       new Item
       {
-        ID = Guid.NewGuid(),
+        id = Guid.NewGuid(),
         Name = "Bronze Shield",
         Price = 18,
         CreatedDate = DateTimeOffset.UtcNow
@@ -38,7 +38,7 @@ namespace Catalog.Repositories{
     }
     public Item GetItem(Guid id)
     {
-      return items.Where(item => item.ID == id).SingleOrDefault();
+      return items.Where(item => item.id == id).SingleOrDefault();
     }
 
     public void CreateItem(Item item)
@@ -48,13 +48,13 @@ namespace Catalog.Repositories{
 
     public void UpdateItem(Item item)
     {
-      var index = items.FindIndex(existingItem => existingItem.ID == item.ID);
+      var index = items.FindIndex(existingItem => existingItem.id == item.id);
       items[index] = item;
     }
 
     public void DeleteItem(Guid id)
     {
-      var index = items.FindIndex(existingItem => existingItem.ID == id);
+      var index = items.FindIndex(existingItem => existingItem.id == id);
       items.RemoveAt(index);
     }
   }

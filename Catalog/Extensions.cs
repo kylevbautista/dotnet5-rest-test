@@ -6,7 +6,7 @@ namespace Catalog{
         // The current item can have a method AsDto that returns its ItemDto version
         public static ItemDto AsDto(this Item item){
             return new ItemDto{
-                ID = item.ID,
+                id = item.id,
                 Name = item.Name,
                 Price = item.Price,
                 CreatedDate = item.CreatedDate
