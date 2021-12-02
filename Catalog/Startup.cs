@@ -54,7 +54,12 @@ namespace Catalog
             // In Mem servicee and interface for dependency injection
             //services.AddSingleton<IItemsRespository,InMemItemsRespository>();
 
-            services.AddControllers();
+
+
+            //options =>{ options.SuppressAsyncSuffixInActionNames = false} needed to stop .net3 breaking change
+            services.AddControllers(options =>{
+                options.SuppressAsyncSuffixInActionNames= false;
+            } );
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog", Version = "v1" });
