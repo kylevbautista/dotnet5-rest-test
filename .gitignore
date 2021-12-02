@@ -1,3 +1,7 @@
 /Catalog/bin/
 
 /Catalog/obj/
+
+route.rest
+
+/Catalog/appsettings.json

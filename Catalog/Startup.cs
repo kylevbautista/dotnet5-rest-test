@@ -42,7 +42,7 @@ namespace Catalog
             // });
             // MongoDb Atlas Cloud Service
             services.AddSingleton<IMongoClient>(ServiceProvider=>{
-                var settings = MongoClientSettings.FromConnectionString("mongodb+srv://admin:<password>@cluster0.doegn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
+                var settings = MongoClientSettings.FromConnectionString(Configuration.GetConnectionString("Atlas"));
                 return new MongoClient(settings);
             });
             // This is for Dependecy injecting the Interface we give to the controller
