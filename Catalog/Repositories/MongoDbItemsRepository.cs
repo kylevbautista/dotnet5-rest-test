@@ -5,12 +5,17 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Catalog.Repositories{
+    // This is essentially our MongoDb Service
+    // Following the I in SOLID Design, this interface only for handling MongoDb queries 
+    // This is also following the Respository pattern. addiontal level of abstraction
     public class MongoDbItemsRepository : IItemsRespository
     {
         private const string databaseName = "catalog";
         private const string collectionName = "items";
         private readonly IMongoCollection<Item> itemsCollection;
-
+        
+        // MongoDB Filter Object
+        private readonly FilterDefinitionBuilder<Item> filterBuilder = Builders<Item>.Filter;
         public MongoDbItemsRepository(IMongoClient mongoClient)
         {
             IMongoDatabase database = mongoClient.GetDatabase(databaseName);
@@ -24,12 +29,14 @@ namespace Catalog.Repositories{
 
         public void DeleteItem(Guid id)
         {
-            throw new NotImplementedException();
+            var filter = filterBuilder.Eq(item => item.id, id);
+            itemsCollection.DeleteOne(filter);
         }
 
         public Item GetItem(Guid id)
         {
-            throw new NotImplementedException();
+            var filter = filterBuilder.Eq(item => item.id, id);
+            return itemsCollection.Find(filter).SingleOrDefault();
         }
 
         public IEnumerable<Item> GetItems()
@@ -39,7 +46,8 @@ namespace Catalog.Repositories{
 
         public void UpdateItem(Item item)
         {
-            throw new NotImplementedException();
+            var filter = filterBuilder.Eq(existingItem => existingItem.id, item.id);
+            itemsCollection.ReplaceOne(filter,item);
         }
     }
 }

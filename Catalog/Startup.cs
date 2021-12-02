@@ -32,6 +32,7 @@ namespace Catalog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Serializers for MongoDb id and createdDate
             BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
             BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.String));
 
@@ -40,6 +41,8 @@ namespace Catalog
             //     var settings = Configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
             //     return new MongoClient(settings.ConnectionString);
             // });
+
+
             // MongoDb Atlas Cloud Service
             services.AddSingleton<IMongoClient>(ServiceProvider=>{
                 var settings = MongoClientSettings.FromConnectionString(Configuration.GetConnectionString("Atlas"));
